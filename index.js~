@@ -1,0 +1,27 @@
+const fs = require('fs');
+const Datastore = require('nedb');
+const images = new Datastore({ filename: 'images.db' });
+
+const cameraPictureDir = '/sdcard/DCIM/100RICOH/'
+
+fs.readdir(cameraPictureDir, (err, items)=> {
+    console.log(items);
+});
+
+images.loadDatabase();
+
+var image = {
+    title: 'Grand Tree Boulevard',
+    filename: 'R100001.JPG'
+}
+
+console.log(image);
+
+images.insert(image, (err, doc)=> {
+    if (!err) {
+	console.log('Inserted', doc.title, 'with ID', doc._id);
+    } else {
+	console.log(err);
+    }
+});
+
